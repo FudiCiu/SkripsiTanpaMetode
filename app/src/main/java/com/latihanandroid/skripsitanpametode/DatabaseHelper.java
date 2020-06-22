@@ -155,10 +155,19 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
     public long deleteRolesAndGoals(RolesAndGoals rolesAndGoals){
         SQLiteDatabase database=this.getWritableDatabase();
-        long deletedCount= database.delete(RolesAndGoals.TABLE_NAME,RolesAndGoals.ID_COLUMN+" =?",
-                new String[]{String.valueOf(rolesAndGoals.getId())});
-        database.close();
-        return deletedCount;
+        Cursor cursor=database.query(DailySchedule.TABLE_NAME,null,DailySchedule.AKTIVITAS_COLUMN+"=? ",new String[]{String.valueOf(rolesAndGoals.getId())},
+                null,
+                null,DailySchedule.ID_COLUMN);
+        if (cursor.moveToFirst()){
+            cursor.close();
+            database.close();
+            return -1;
+        }else {
+            long deletedCount= database.delete(RolesAndGoals.TABLE_NAME,RolesAndGoals.ID_COLUMN+" =?",
+                    new String[]{String.valueOf(rolesAndGoals.getId())});
+            database.close();
+            return deletedCount;
+        }
     }
 
     public long insertDailySchedule(DailySchedule dailySchedule){

@@ -123,8 +123,8 @@ public class UpdateDeleteRolesAndGoalsFragment extends Fragment {
                     if (getActivity()!=null){
                         getActivity().onBackPressed();
                     }
-                }else {
-                    Toast.makeText(getContext(), "Failed to delete data", Toast.LENGTH_SHORT).show();
+                }else if (deletedCount==-1){
+                    Toast.makeText(getContext(), "Failed to delete data. There is another data using this data", Toast.LENGTH_SHORT).show();
                 }
             }
 
